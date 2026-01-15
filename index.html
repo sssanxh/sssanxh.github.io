@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Соня, я тебя люблю! 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background: linear-gradient(135deg, #ffebf0 0%, #fff5f9 100%);
+            color: #8a4b76;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 15px;
+            position: relative;
+        }
+
+        /* Фоновые элементы */
+        .bg-heart {
+            position: fixed;
+            font-size: 40px;
+            opacity: 0.1;
+            z-index: 0;
+            animation: float 20s infinite linear;
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 35px;
+            padding: 25px;
+            box-shadow: 0 25px 70px rgba(255, 105, 180, 0.25);
+            border: 5px solid #ffb8d9;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Шапка */
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff9ec0, #ff7bac);
+            border-radius: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 0 #ff4d94;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        /* Главное сообщение */
+        .love-message {
+            background: linear-gradient(135deg, #fff9fb, white);
+            border-radius: 30px;
+            padding: 40px 30px;
+            margin-bottom: 35px;
+            text-align: center;
+            border: 4px solid #ffd1e0;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(255, 182, 193, 0.3);
+        }
+
+        .message-text {
+            font-size: 2.5rem;
+            color: #ff6ba6;
+            margin-bottom: 25px;
+            font-weight: 900;
+            line-height: 1.3;
+            text-shadow: 2px 2px 0 #ffebf3;
+        }
+
+        .heart {
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+            margin: 0 15px;
+            font-size: 2.8rem;
+        }
+
+        .love-description {
+            font-size: 1.4rem;
+            color: #9d5a83;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 25px auto 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            border-left: 5px solid #ff9ec0;
+            border-right: 5px solid #ff9ec0;
+        }
+
+        /* Котята */
+        .kittens-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #ff6ba6;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(to right, #ff9ec0, #ff7bac);
+            border-radius: 2px;
+        }
+
+        .section-icon {
+            display: block;
+            font-size: 3rem;
+            margin-top: 15px;
+        }
+
+        .kitten-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .kitten-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(255, 107, 166, 0.2);
+            border: 4px solid #ffd1e0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .kitten-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(255, 107, 166, 0.3);
+        }
+
+        .kitten-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #fff9fb; /* Фон на случай если фото не загрузится */
+        }
+
+        .kitten-img:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .kitten-text {
+            padding: 25px 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #8a4b76;
+            font-weight: 500;
+            line-height: 1.5;
+            background: #fff9fb;
+            position: relative;
+        }
+
+        .kitten-text:before {
+            content: "🐾";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 2px solid #ffd1e0;
+        }
+
+        /* Пожелания */
+        .wishes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .wish {
+            background: white;
+            border-radius: 25px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.3);
+            border: 4px solid #ffd1e0;
+            transition: all 0.3s ease;
+        }
+
+        .wish:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(135deg, #fff9fb, white);
+        }
+
+        .wish-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: floatIcon 3s infinite ease-in-out;
+        }
+
+        .wish-text {
+            font-size: 1.3rem;
+            color: #8a4b76;
+            font-weight: 500;
+        }
+
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #ff7bac, #ff9ec0);
+            border-radius: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #ff4d94, #ffb8d9);
+        }
+
+        .footer-text {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .signature {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 0 #ff4d94;
+        }
+
+        /* Анимационные элементы */
+        .floating-hearts {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .floating-heart {
+            animation: float 3s infinite ease-in-out;
+            font-size: 2.5rem;
+        }
+
+        /* Анимации */
+        @keyframes heartbeat {
+            0%, 100% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            25% { 
+                transform: scale(1.3);
+                filter: brightness(1.2);
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: brightness(1.1);
+            }
+            75% { 
+                transform: scale(1.25);
+                filter: brightness(1.15);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+            }
+            33% { 
+                transform: translateY(-20px) rotate(5deg);
+            }
+            66% { 
+                transform: translateY(10px) rotate(-5deg);
+            }
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { 
+                transform: translateY(0);
+            }
+            50% { 
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px;
+                border-radius: 30px;
+                border-width: 4px;
+            }
+            
+            .title {
+                font-size: 2.2rem;
+            }
+            
+            .message-text {
+                font-size: 2rem;
+            }
+            
+            .love-description {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+            
+            .kitten-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .wishes {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .kitten-img {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+                border-radius: 25px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .message-text {
+                font-size: 1.6rem;
+            }
+            
+            .heart {
+                font-size: 2rem;
+                margin: 0 8px;
+            }
+            
+            .love-description {
+                font-size: 1.1rem;
+                padding: 12px;
+            }
+            
+            .kitten-img {
+                height: 160px;
+            }
+            
+            .wish {
+                padding: 25px 15px;
+            }
+            
+            .wish-icon {
+                font-size: 3rem;
+            }
+            
+            .footer {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .message-text {
+                font-size: 1.4rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .kitten-text {
+                font-size: 1.1rem;
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фоновые сердечки -->
+    <div id="bg-hearts"></div>
+
+    <div class="container">
+        <!-- Шапка -->
+        <header class="header">
+            <h1 class="title">💝 ДЛЯ САМОЙ МИЛОЙ СОНИ 💝</h1>
+            <p class="subtitle">Сайт, полный любви и милоты</p>
+        </header>
+
+        <!-- Главное сообщение -->
+        <section class="love-message">
+            <div class="floating-hearts">
+                <div class="floating-heart" style="animation-delay: 0s">❤️</div>
+                <div class="floating-heart" style="animation-delay: 0.5s">💖</div>
+                <div class="floating-heart" style="animation-delay: 1s">💕</div>
+                <div class="floating-heart" style="animation-delay: 1.5s">💗</div>
+                <div class="floating-heart" style="animation-delay: 2s">💓</div>
+            </div>
+            
+            <p class="message-text">
+                <span class="heart" style="color: #ff4d94">❤️</span>
+                СООООНЯ, Я ТЕБЯ ООООЧЕНЬ ЛЮБЛЮ!
+                <span class="heart" style="color: #ff6ba6">💖</span>
+            </p>
+            
+            <p class="love-description">
+                Ты — самое прекрасное чудо в моей жизни! 
+                Как самый милый котёнок на свете, ты наполняешь каждый мой день теплом, 
+                нежностью и бесконечным счастьем. Твоя улыбка — это солнце, 
+                которое светит даже в самую пасмурную погоду! 🌟
+            </p>
+        </section>
+
+        <!-- Котята -->
+        <section class="kittens-section">
+            <h2 class="section-title">Милые котята, как и ты</h2>
+            <div class="section-icon">🐱🐾💕</div>
+            
+            <div class="kitten-grid">
+                <div class="kitten-card">
+                    <div class="kitten-img" id="kitten1"></div>
+                    <p class="kitten-text">Такой же милый и нежный, как твои глазки, в которых тонут звёзды</p>
+                </div>
+                
+                <div class="kitten-card">
+                    <div class="kitten-img" id="kitten2"></div>
+                    <p class="kitten-text">Такой же тёплый и уютный, как твои объятия, в которых хочется остаться навсегда</p>
+                </div>
+                
+                <div class="kitten-card">
+                    <div class="kitten-img" id="kitten3"></div>
+                    <p class="kitten-text">Такой же игривый и весёлый, как твой смех, который звучит лучше любой музыки</p>
+                </div>
+                
+                <div class="kitten-card">
+                    <div class="kitten-img" id="kitten4"></div>
+                    <p class="kitten-text">Такой же очаровательный и прекрасный, как ты, моя самая любимая</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Пожелания -->
+        <section class="kittens-section">
+            <h2 class="section-title">Мои пожелания для тебя</h2>
+            <div class="section-icon">✨🎁🌸</div>
+            
+            <div class="wishes">
+                <div class="wish">
+                    <span class="wish-icon">☀️</span>
+                    <p class="wish-text">Тёплых солнечных дней и миллиона поводов для улыбок</p>
+                </div>
+                
+                <div class="wish">
+                    <span class="wish-icon">🌙</span>
+                    <p class="wish-text">Сладких снов под убаюкивающий шум дождя и мурлыканье котиков</p>
+                </div>
+                
+                <div class="wish">
+                    <span class="wish-icon">🍰</span>
+                    <p class="wish-text">Вкуснейших десертов и уютных вечеров с чашечкой горячего шоколада</p>
+                </div>
+                
+                <div class="wish">
+                    <span class="wish-icon">🎀</span>
+                    <p class="wish-text">Море комплиментов, восхищения и искренней заботы от всех вокруг</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <p class="footer-text">Создано с бесконечной любовью и нежностью</p>
+            
+            <div class="floating-hearts">
+                <div class="floating-heart" style="color: #fff">💝</div>
+                <div class="floating-heart" style="color: #fff">💖</div>
+                <div class="floating-heart" style="color: #fff">💕</div>
+            </div>
+            
+            <p class="signature">Для самой прекрасной Сони 💕</p>
+            <p style="margin-top: 20px; font-size: 1.2rem; opacity: 0.9;">Навсегда и всегда</p>
+        </footer>
+    </div>
+
+    <script>
+        // Гарантированно работающие ссылки на изображения котят
+        const kittenImages = [
+            // Изображения с надежных источников
+            "https://mirhvost.ru/upload/iblock/dcd/dcd1b08f18c96a851419648332dae9c5.jpg",
+            "https://img.freepik.com/free-photo/little-kitten-sleeps-with-his-paws-his-head_181624-54313.jpg?semt=ais_hybrid&w=740&q=80",
+            "https://img.freepik.com/premium-photo/funny-ginger-kitten-playing-with-toy-mouse_511816-1065.jpg",
+            "https://koshka.top/uploads/posts/2021-12/1638558083_1-koshka-top-p-samie-milie-kotiki-na-svete-1.jpg",
+            // Резервные изображения
+            "https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "https://images.pexels.com/photos/1741205/pexels-photo-1741205.jpeg?auto=compress&cs=tinysrgb&w=600",
+            "https://images.pexels.com/photos/177809/pexels-photo-177809.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ];
+
+        // Устанавливаем изображения для котят
+       function loadKittenImages() {
+    const kittens = [
+        document.getElementById('kitten1'),
+        document.getElementById('kitten2'),
+        document.getElementById('kitten3'),
+        document.getElementById('kitten4')
+    ];
+
+    // РАЗНЫЕ эмодзи котят для каждого описания
+    const kittenEmojis = [
+        '😻', // Для первого: "милый и нежный" - влюблённый котик
+        '🐈‍', // Для второго: "тёплый и уютный" - чёрный кот (уютный)
+        '😸', // Для третьего: "игривый и весёлый" - улыбающийся кот
+        '🐱💖' // Для четвёртого: "очаровательный и прекрасный" - кот с сердечком
+    ];
+
+    // Цвета фона для каждого котика
+    const kittenColors = [
+        '#ffd1e0', // Нежно-розовый
+        '#ffb8d9', // Розовый
+        '#ff9ec0', // Ярко-розовый
+        '#ff7bac'  // Глубокий розовый
+    ];
+
+          kittens.forEach((kitten, index) => {
+               if (kitten) {
+                   // Используем разные изображения для каждого котенка
+                   const imgIndex = index % kittenImages.length;
+
+                   // ДЛЯ МОБИЛЬНЫХ: используем CORS proxy
+                   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                   let imageUrl = kittenImages[imgIndex];
+
+                   if (isMobile) {
+                       // Добавляем CORS proxy для мобильных устройств
+                       imageUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(imageUrl)}`;
+                   }
+
+                   kitten.style.backgroundImage = `url('${imageUrl}')`;
+                   kitten.style.backgroundSize = 'cover';
+                   kitten.style.backgroundPosition = 'center';
+            
+            // Если изображение не загрузится, покажем РАЗНЫЕ эмодзи котиков
+            kitten.onerror = function() {
+                this.style.backgroundImage = 'none';
+                this.style.backgroundColor = kittenColors[index];
+                this.style.display = 'flex';
+                this.style.alignItems = 'center';
+                this.style.justifyContent = 'center';
+                this.innerHTML = `
+                    <div style="
+                        text-align: center;
+                        padding: 20px;
+                    ">
+                        <div style="
+                            font-size: 5rem;
+                            animation: float 3s infinite ease-in-out;
+                            animation-delay: ${index * 0.5}s;
+                            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+                        ">
+                            ${kittenEmojis[index]}
+                        </div>
+                        <div style="
+                            margin-top: 15px;
+                            font-size: 1.2rem;
+                            color: #8a4b76;
+                            font-weight: bold;
+                            background: rgba(255,255,255,0.7);
+                            padding: 8px 15px;
+                            border-radius: 20px;
+                            border: 2px dashed #ff9ec0;
+                        ">
+                            ${index === 0 ? 'Милашка' : 
+                              index === 1 ? 'Уютняшка' : 
+                              index === 2 ? 'Веселушка' : 
+                              'Очаровашка'} для Сони
+                        </div>
+                    </div>
+                `;
+            };
+        }
+    });
+}
+
+
+        // Создаем фоновые сердечки
+        function createBackgroundHearts() {
+            const container = document.getElementById('bg-hearts');
+            if (!container) return;
+            
+            const heartCount = window.innerWidth < 768 ? 15 : 30;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bg-heart';
+                heart.innerHTML = '❤️';
+                
+                // Случайная позиция
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const size = Math.random() * 30 + 20;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 30 + 30;
+                
+                heart.style.cssText = `
+                    left: ${left}vw;
+                    top: ${top}vh;
+                    font-size: ${size}px;
+                    animation-delay: ${delay}s;
+                    animation-duration: ${duration}s;
+                    color: rgba(255, 77, 148, ${Math.random() * 0.2 + 0.1});
+                `;
+                
+                container.appendChild(heart);
+            }
+        }
+
+        // Анимация при клике
+        document.addEventListener('click', function(e) {
+            if (Math.random() > 0.7) { // 30% chance on click
+                createClickHeart(e.clientX, e.clientY);
+            }
+        });
+
+        function createClickHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.style.cssText = `
+                position: fixed;
+                left: ${x - 20}px;
+                top: ${y - 20}px;
+                font-size: 40px;
+                z-index: 1000;
+                pointer-events: none;
+                animation: clickHeart 1s forwards;
+            `;
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        // Добавляем стиль для анимации клика
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes clickHeart {
+                0% {
+                    transform: translateY(0) scale(0.5);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) scale(1.5);
+                    opacity: 0;
+                }
+            }
+            
+            .kitten-img.loading {
+                background: linear-gradient(90deg, #fff9fb 25%, #ffebf0 50%, #fff9fb 75%);
+                background-size: 200% 100%;
+                animation: loading 1.5s infinite;
+            }
+            
+            @keyframes loading {
+                0% { background-position: 200% 0; }
+                100% { background-position: -200% 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackgroundHearts();
+            loadKittenImages();
+            
+            // Добавляем эффект параллакса при прокрутке
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.3;
+                
+                const bgHearts = document.querySelectorAll('.bg-heart');
+                bgHearts.forEach((heart, index) => {
+                    heart.style.transform = `translateY(${rate + (index % 2 ? 10 : -10)}px)`;
+                });
+            });
+            
+            // Случайное мигание сердечек в заголовке
+            setInterval(() => {
+                const hearts = document.querySelectorAll('.heart, .floating-heart');
+                hearts.forEach(heart => {
+                    if (Math.random() > 0.7) {
+                        heart.style.animation = 'none';
+                        setTimeout(() => {
+                            heart.style.animation = '';
+                        }, 100);
+                    }
+                });
+            }, 1000);
+            
+            // Добавляем интерактивность для карточек с котятами
+            const kittenCards = document.querySelectorAll('.kitten-card');
+            kittenCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '💕';
+                    heart.style.cssText = `
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        font-size: 24px;
+                        z-index: 10;
+                        animation: heartbeat 1s;
+                    `;
+                    this.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1000);
+                });
+                
+                // Для мобильных устройств - при касании
+                card.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '💕';
+                    heart.style.cssText = `
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        font-size: 24px;
+                        z-index: 10;
+                        animation: heartbeat 1s;
+                    `;
+                    this.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1000);
+                }, { passive: false });
+            });
+        });
+
+        // Фолбэк если интернет медленный - покажем SVG котят
+        function createFallbackKittenSVG() {
+            const svgKitten = `
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="#ffd1e0"/>
+                    <circle cx="35" cy="40" r="8" fill="#8a4b76"/>
+                    <circle cx="65" cy="40" r="8" fill="#8a4b76"/>
+                    <circle cx="35" cy="40" r="3" fill="white"/>
+                    <circle cx="65" cy="40" r="3" fill="white"/>
+                    <path d="M 40,60 Q 50,70 60,60" stroke="#8a4b76" stroke-width="3" fill="none"/>
+                    <ellipse cx="30" cy="30" rx="3" ry="5" fill="#8a4b76"/>
+                    <ellipse cx="70" cy="30" rx="3" ry="5" fill="#8a4b76"/>
+                </svg>
+            `;
+            return svgKitten;
+        }
+
+        // Проверяем загрузку изображений через 3 секунды
+        setTimeout(() => {
+    const kittenImgs = document.querySelectorAll('.kitten-img');
+    const kittenEmojis = ['😻', '🐈‍⬛', '😸', '🐱💖'];
+    const kittenNames = ['Милашка', 'Уютняшка', 'Веселушка', 'Очаровашка'];
+    const kittenColors = ['#ffd1e0', '#ffb8d9', '#ff9ec0', '#ff7bac'];
+    
+    kittenImgs.forEach((img, index) => {
+        // Проверяем, загрузилось ли изображение
+        const computedStyle = window.getComputedStyle(img);
+        const bgImage = computedStyle.backgroundImage;
+        
+        if (!bgImage || bgImage === 'none' || bgImage === 'url("none")' || 
+            bgImage.includes('none') || bgImage.includes('gradient')) {
+            
+            // Если изображение не загрузилось, покажем РАЗНЫЕ эмодзи
+            img.style.backgroundImage = 'none';
+            img.style.backgroundColor = kittenColors[index];
+            img.style.display = 'flex';
+            img.style.alignItems = 'center';
+            img.style.justifyContent = 'center';
+            img.style.flexDirection = 'column';
+            
+            img.innerHTML = `
+                <div style="
+                    font-size: 5.5rem;
+                    animation: float 3s infinite ease-in-out;
+                    animation-delay: ${index * 0.3}s;
+                    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
+                    margin-bottom: 15px;
+                ">
+                    ${kittenEmojis[index]}
+                </div>
+                <div style="
+                    font-size: 1.3rem;
+                    color: #8a4b76;
+                    font-weight: bold;
+                    background: rgba(255,255,255,0.85);
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    border: 3px solid white;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                    text-align: center;
+                    max-width: 90%;
+                ">
+                    ${kittenNames[index]} специально для Сони! 💕
+                </div>
+            `;
+        }
+    });
+}, 3000);
+    </script>
+</body>
+</html>
